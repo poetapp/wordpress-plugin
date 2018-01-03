@@ -304,6 +304,6 @@ class PoetArticlePoster {
     }
 }
 
-WPDTChildRow::init();
+PoetArticlePoster::init();
 
 ?>
