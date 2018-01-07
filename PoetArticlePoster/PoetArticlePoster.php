@@ -217,7 +217,7 @@ class PoetArticlePoster {
 		$new_input = array();
 
 		if ( isset( $input['api_url'] ) ) {
-			$new_input['api_url'] = sanitize_text_field( $input['api_url'] );
+			$new_input['api_url'] = esc_url_raw( $input['api_url'] );
 		}
 		if ( isset( $input['public_key'] ) ) {
 			$new_input['public_key'] = sanitize_text_field( $input['public_key'] );
@@ -226,7 +226,7 @@ class PoetArticlePoster {
 			$new_input['private_key'] = sanitize_text_field( $input['private_key'] );
 		}
 		if ( isset( $input['active'] ) ) {
-			$new_input['active'] = sanitize_text_field( $input['active'] );
+			$new_input['active'] = (int) $input['active'];
 		}
 
 		return $new_input;
