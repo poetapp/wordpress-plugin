@@ -280,7 +280,7 @@ class PoetArticlePoster {
 		$post   = get_post( $post_id );
 
 		//Checking if plugin is activated in its settings page and the post status is publish to make sure it is not just a draft
-		if ( ! $active || $post->post_status != 'publish' ) {
+		if ( ! $active || $post->post_status !== 'publish' ) {
 			return;
 		}
 
