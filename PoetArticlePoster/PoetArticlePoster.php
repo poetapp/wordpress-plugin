@@ -165,6 +165,14 @@ class PoetArticlePoster {
 			$this->plugin // Page
 		);
 
+        add_settings_field(
+            'author', // ID
+            __( 'Author Name' ), // Title
+            array( $this, 'author_callback' ), // Callback
+            $this->plugin, // Page
+            'poet_article_poster_setting_section_id' // Section
+        );
+
 		add_settings_field(
 			'api_url', // ID
 			__( 'API URL' ), // Title
@@ -194,7 +202,7 @@ class PoetArticlePoster {
 	 * Prints instruction string in top of settings page
 	 */
 	function print_section_info() {
-		print __( 'Enter API URL and Token (this will return to default value if the plugin deactivated and reactivated again):' );
+		print __( 'Enter Author Name, API URL, and Token (this will return to default value if the plugin deactivated and reactivated again):' );
 	}
 
 	/**
@@ -206,6 +214,10 @@ class PoetArticlePoster {
 	 */
 	function sanitize( $input ) {
 		$new_input = array();
+
+        if ( isset( $input['author'] ) ) {
+            $new_input['author'] = sanitize_text_field( $input['author'] );
+        }
 
 		if ( isset( $input['api_url'] ) ) {
 			$new_input['api_url'] = esc_url_raw( $input['api_url'] );
@@ -219,6 +231,16 @@ class PoetArticlePoster {
 
 		return $new_input;
 	}
+
+    /**
+     * Returns Author field input
+     */
+    function author_callback() {
+        printf(
+            '<input type="text" id="author" name="poet_article_poster_option[author]" value="%s" />',
+            isset( get_option( 'poet_article_poster_option' )['author'] ) ? esc_attr( get_option( 'poet_article_poster_option' )['author'] ) : ''
+        );
+    }
 
 	/**
 	 * Returns API URL field input
@@ -264,12 +286,13 @@ class PoetArticlePoster {
 			return;
 		}
 
-		//Getting API credentials set in plugin settings page
+		//Getting API credentials and author name set in plugin settings page
+		$author = isset( get_option( 'poet_article_poster_option' )['author'] ) ? get_option( 'poet_article_poster_option' )['author'] : '';
 		$url    = isset( get_option( 'poet_article_poster_option' )['api_url'] ) ? get_option( 'poet_article_poster_option' )['api_url'] : '';
 		$token  = isset( get_option( 'poet_article_poster_option' )['token'] ) ? get_option( 'poet_article_poster_option' )['token'] : '';
 
 		//Generating Consumer object with credentials sent to its constructor
-		$consumer = new Consumer( $url, $token, $post );
+		$consumer = new Consumer( $author, $url, $token, $post );
 
 		//Posting the article to the API
 		try {
