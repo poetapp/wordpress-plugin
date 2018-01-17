@@ -99,10 +99,9 @@ class PoetArticlePoster {
 	 */
 	public function set_default_values() {
 		$default = array(
-			'api_url'     => 'https://app.po.et/api',
-			'public_key'  => '',
-			'private_key' => '',
-			'active'      => 1
+			'api_url'   => '',
+			'token'     => '',
+			'active'    => 1
 		);
 		update_option( 'poet_article_poster_option', $default );
 	}
@@ -175,17 +174,9 @@ class PoetArticlePoster {
 		);
 
 		add_settings_field(
-			'public_key', // ID
-			__( 'Public Key/Profile ID' ), // Title
-			array( $this, 'public_key_callback' ), // Callback
-			$this->plugin, // Page
-			'poet_article_poster_setting_section_id' // Section
-		);
-
-		add_settings_field(
-			'private_key', // ID
-			__( 'Private Key' ), // Title
-			array( $this, 'private_key_callback' ), // Callback
+			'token', // ID
+			__( 'Token' ), // Title
+			array( $this, 'token_callback' ), // Callback
 			$this->plugin, // Page
 			'poet_article_poster_setting_section_id' // Section
 		);
@@ -203,7 +194,7 @@ class PoetArticlePoster {
 	 * Prints instruction string in top of settings page
 	 */
 	function print_section_info() {
-		print __( 'Enter API URL, Public Key/Profile ID, and Private Key (this will return to default value if the plugin deactivated and reactivated again):' );
+		print __( 'Enter API URL and Token (this will return to default value if the plugin deactivated and reactivated again):' );
 	}
 
 	/**
@@ -219,11 +210,8 @@ class PoetArticlePoster {
 		if ( isset( $input['api_url'] ) ) {
 			$new_input['api_url'] = esc_url_raw( $input['api_url'] );
 		}
-		if ( isset( $input['public_key'] ) ) {
-			$new_input['public_key'] = sanitize_text_field( $input['public_key'] );
-		}
-		if ( isset( $input['private_key'] ) ) {
-			$new_input['private_key'] = sanitize_text_field( $input['private_key'] );
+		if ( isset( $input['token'] ) ) {
+			$new_input['token'] = sanitize_text_field( $input['token'] );
 		}
 		if ( isset( $input['active'] ) ) {
 			$new_input['active'] = (int) $input['active'];
@@ -243,22 +231,12 @@ class PoetArticlePoster {
 	}
 
 	/**
-	 * Returns Public Key field input
+	 * Returns Token field input
 	 */
-	function public_key_callback() {
+	function token_callback() {
 		printf(
-			'<input type="text" id="public_key" name="poet_article_poster_option[public_key]" value="%s" required />',
-			isset( get_option( 'poet_article_poster_option' )['public_key'] ) ? esc_attr( get_option( 'poet_article_poster_option' )['public_key'] ) : ''
-		);
-	}
-
-	/**
-	 * Returns Private Key field input
-	 */
-	function private_key_callback() {
-		printf(
-			'<input type="text" id="private_key" name="poet_article_poster_option[private_key]" value="%s" required />',
-			isset( get_option( 'poet_article_poster_option' )['private_key'] ) ? esc_attr( get_option( 'poet_article_poster_option' )['private_key'] ) : ''
+			'<input type="text" id="token" name="poet_article_poster_option[token]" value="%s" required />',
+			isset( get_option( 'poet_article_poster_option' )['token'] ) ? esc_attr( get_option( 'poet_article_poster_option' )['token'] ) : ''
 		);
 	}
 
@@ -276,21 +254,22 @@ class PoetArticlePoster {
 	 * @param $post_id
 	 */
 	function post_article( $post_id ) {
-		$active = isset( get_option( 'poet_article_poster_option' )['active'] ) ? 1 : 0;
-		$post   = get_post( $post_id );
+		$active     = isset( get_option( 'poet_article_poster_option' )['active'] ) ? 1 : 0;
+		$api_url    = ! empty( get_option( 'poet_article_poster_option' )['api_url'] ) ? 1 : 0;
+		$token      = ! empty( get_option( 'poet_article_poster_option' )['token'] ) ? 1 : 0;
+		$post       = get_post( $post_id );
 
 		//Checking if plugin is activated in its settings page and the post status is publish to make sure it is not just a draft
-		if ( ! $active || $post->post_status !== 'publish' ) {
+		if ( ! $active || ! $api_url || ! $token || $post->post_status !== 'publish' ) {
 			return;
 		}
 
 		//Getting API credentials set in plugin settings page
-		$url         = isset( get_option( 'poet_article_poster_option' )['api_url'] ) ? get_option( 'poet_article_poster_option' )['api_url'] : '';
-		$public_key  = isset( get_option( 'poet_article_poster_option' )['public_key'] ) ? get_option( 'poet_article_poster_option' )['public_key'] : '';
-		$private_key = isset( get_option( 'poet_article_poster_option' )['private_key'] ) ? get_option( 'poet_article_poster_option' )['private_key'] : '';
+		$url    = isset( get_option( 'poet_article_poster_option' )['api_url'] ) ? get_option( 'poet_article_poster_option' )['api_url'] : '';
+		$token  = isset( get_option( 'poet_article_poster_option' )['token'] ) ? get_option( 'poet_article_poster_option' )['token'] : '';
 
 		//Generating Consumer object with credentials sent to its constructor
-		$consumer = new Consumer( $url, $public_key, $private_key, $post );
+		$consumer = new Consumer( $url, $token, $post );
 
 		//Posting the article to the API
 		try {

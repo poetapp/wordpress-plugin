@@ -8,8 +8,7 @@ defined( 'ABSPATH' ) OR exit;
  */
 class Consumer {
 	private $url;
-	private $public_key;
-	private $private_key;
+	private $token;
 	private $post;
 
 	/**
@@ -20,11 +19,10 @@ class Consumer {
 	 * @param $private_key
 	 * @param $post
 	 */
-	public function __construct( $url, $public_key, $private_key, $post ) {
-		$this->url         = $url;
-		$this->public_key  = $public_key;
-		$this->private_key = $private_key;
-		$this->post        = $post;
+	public function __construct( $url, $token, $post ) {
+		$this->url      = $url;
+		$this->token    = $token;
+		$this->post     = $post;
 	}
 
 	/**
