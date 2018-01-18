@@ -49,7 +49,9 @@ class PoetArticlePoster {
 		add_action( 'admin_menu', array( $this, 'add_options_page' ) );
 		add_action( 'admin_init', array( $this, 'register_setting' ) );
 		add_action( 'save_post', array( $this, 'post_article' ) );
-	}
+        add_action( 'wp_enqueue_scripts', array( $this, 'styles' ) );
+        add_shortcode( 'poet-badge', array( $this, 'poet_badge_handler' ) );
+    }
 
 
 	/**
@@ -109,7 +111,7 @@ class PoetArticlePoster {
 	/**
 	 * Plugin settings page form
 	 */
-	function create_options_page() {
+	public function create_options_page() {
 		?>
         <div class="wrap">
 
@@ -125,7 +127,7 @@ class PoetArticlePoster {
 	/**
 	 * Registration of settings page in WordPress options menu
 	 */
-	function add_options_page() {
+	public function add_options_page() {
 		add_options_page( __( 'Po.et Article Poster Settings' ),
 			__( 'Po.et Article Poster Settings' ),
 			'manage_options',
@@ -141,7 +143,7 @@ class PoetArticlePoster {
 	 *
 	 * @return mixed
 	 */
-	function add_settings_link( $links ) {
+	public function add_settings_link( $links ) {
 		$url           = menu_page_url( plugin_basename( __FILE__ ), false );
 		$settings_link = '<a href="' . $url . '">' . __( 'Settings' ) . '</a>';
 		array_push( $links, $settings_link );
@@ -153,7 +155,7 @@ class PoetArticlePoster {
 	/**
 	 * Settings option fields registration
 	 */
-	function register_setting() {
+	public function register_setting() {
 		register_setting( 'poet_article_poster',
 			'poet_article_poster_option',
 			array( $this, 'sanitize' ) );
@@ -201,7 +203,7 @@ class PoetArticlePoster {
 	/**
 	 * Prints instruction string in top of settings page
 	 */
-	function print_section_info() {
+	public function print_section_info() {
 		print __( 'Enter Author Name, API URL, and Token (this will return to default value if the plugin deactivated and reactivated again):' );
 	}
 
@@ -212,7 +214,7 @@ class PoetArticlePoster {
 	 *
 	 * @return array
 	 */
-	function sanitize( $input ) {
+	public function sanitize( $input ) {
 		$new_input = array();
 
         if ( isset( $input['author'] ) ) {
@@ -235,7 +237,7 @@ class PoetArticlePoster {
     /**
      * Returns Author field input
      */
-    function author_callback() {
+    public function author_callback() {
         printf(
             '<input type="text" id="author" name="poet_article_poster_option[author]" value="%s" />',
             isset( get_option( 'poet_article_poster_option' )['author'] ) ? esc_attr( get_option( 'poet_article_poster_option' )['author'] ) : ''
@@ -245,7 +247,7 @@ class PoetArticlePoster {
 	/**
 	 * Returns API URL field input
 	 */
-	function api_url_callback() {
+    public function api_url_callback() {
 		printf(
 			'<input type="text" id="api_url" name="poet_article_poster_option[api_url]" value="%s" required />',
 			isset( get_option( 'poet_article_poster_option' )['api_url'] ) ? esc_attr( get_option( 'poet_article_poster_option' )['api_url'] ) : ''
@@ -255,7 +257,7 @@ class PoetArticlePoster {
 	/**
 	 * Returns Token field input
 	 */
-	function token_callback() {
+    public function token_callback() {
 		printf(
 			'<input type="text" id="token" name="poet_article_poster_option[token]" value="%s" required />',
 			isset( get_option( 'poet_article_poster_option' )['token'] ) ? esc_attr( get_option( 'poet_article_poster_option' )['token'] ) : ''
@@ -265,7 +267,7 @@ class PoetArticlePoster {
 	/**
 	 * Returns activation checkbox input
 	 */
-	function active_callback() {
+    public function active_callback() {
 		$checked = isset( get_option( 'poet_article_poster_option' )['active'] ) ? 1 : 0;
 		echo '<input type="checkbox" id="active" name="poet_article_poster_option[active]" ' . checked( 1, $checked, false ) . ' />';
 	}
@@ -275,7 +277,7 @@ class PoetArticlePoster {
 	 *
 	 * @param $post_id
 	 */
-	function post_article( $post_id ) {
+	public function post_article( $post_id ) {
 		$active     = isset( get_option( 'poet_article_poster_option' )['active'] ) ? 1 : 0;
 		$api_url    = ! empty( get_option( 'poet_article_poster_option' )['api_url'] ) ? 1 : 0;
 		$token      = ! empty( get_option( 'poet_article_poster_option' )['token'] ) ? 1 : 0;
@@ -302,6 +304,29 @@ class PoetArticlePoster {
 		}
 
 	}
+
+    /**
+     * Includes the badge stylesheets in template header
+     */
+    public function styles() {
+        if ( is_admin() ) {
+            return;
+        }
+        wp_register_style( 'poet-badge-font', 'https://fonts.googleapis.com/css?family=Roboto' );
+        wp_enqueue_style( 'poet-badge-font' );
+    }
+
+    /**
+     * Handles Verified by Po.et badge shortcode
+     */
+    public function poet_badge_handler() {
+        $post                   = get_post();
+        $quill_image_url        = plugin_dir_url( $this->plugin ) . 'assets/images/quill.svg';
+        $post_publication_date  = get_the_modified_time( 'F jS Y, H:i', $post );
+        ob_start();
+        include_once dirname(__FILE__) . '/assets/includes/templates/poet_badge_template.php';
+        return ob_get_clean();
+    }
 }
 
 PoetArticlePoster::init();
