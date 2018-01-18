@@ -298,7 +298,21 @@ class PoetArticlePoster {
 
 		//Posting the article to the API
 		try {
-			$consumer->consume();
+			$response               = $consumer->consume();
+            $decoded_response_body  = json_decode( $response['body'] );
+
+            //Adding initial empty meta key for the poet work id
+            update_post_meta( $post_id, 'poet_work_id', '' );
+
+            //Checking if the returned response body is a valid JSON string
+            if ( json_last_error() !== JSON_ERROR_SYNTAX
+                && is_object( $decoded_response_body )
+                && property_exists( $decoded_response_body, 'workId' ) ) {
+
+                //Creating or updating poet work id meta to the returned work id
+                update_post_meta( $post_id, 'poet_work_id', $decoded_response_body->workId );
+
+            }
 		} catch ( Exception $exception ) {
 
 		}
@@ -323,6 +337,7 @@ class PoetArticlePoster {
         $post                   = get_post();
         $quill_image_url        = plugin_dir_url( $this->plugin ) . 'assets/images/quill.svg';
         $post_publication_date  = get_the_modified_time( 'F jS Y, H:i', $post );
+
         ob_start();
         include_once dirname(__FILE__) . '/assets/includes/templates/poet_badge_template.php';
         return ob_get_clean();
