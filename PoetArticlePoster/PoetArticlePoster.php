@@ -337,6 +337,7 @@ class PoetArticlePoster {
         $post                   = get_post();
         $quill_image_url        = plugin_dir_url( $this->plugin ) . 'assets/images/quill.svg';
         $post_publication_date  = get_the_modified_time( 'F jS Y, H:i', $post );
+        $work_id                = get_post_meta( $post->ID, 'poet_work_id', true );
 
         ob_start();
         include_once dirname(__FILE__) . '/assets/includes/templates/poet_badge_template.php';

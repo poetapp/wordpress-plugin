@@ -4,8 +4,8 @@
         <img src="<?php echo $quill_image_url; ?>"
              style=" width: 31px; height: 31px; margin-top: 8px; margin-left: 8px; margin-right: 8px; color: #35393E; font-family: Roboto;">
         <div>
-            <p style="padding-top: 10px; line-height: 15px; margin: 0; font-size: 10pt; font-weight: bold; text-align: left;">
-                Verified on po.et</p>
+            <p title="<?php echo $work_id; ?>" style="padding-top: 10px; line-height: 15px; margin: 0; font-size: 10pt; font-weight: bold; text-align: left;">
+                Verified on Po.et</p>
             <p style="text-align: left; line-height: 15px; margin: 0; font-size: 10px; padding-top: 1px; font-size: 8px; font-family: Roboto; font-weight: bold; line-height: 13px; color: #707070;">
                 <?php echo $post_publication_date ?></p>
         </div>
