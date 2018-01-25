@@ -30,5 +30,5 @@ Use this checkbox to enable or disable automatic posting.
 
 ## License
 
-The Po.et Wordpress plugin is licensed under the terms of the GPL Open Source license and is available for free.
+The Po.et Wordpress plugin is licensed under the terms of the MIT License and is available for free. See [LICENSE](LICENSE).
 
