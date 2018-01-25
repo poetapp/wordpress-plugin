@@ -20,7 +20,7 @@ From your WordPress administration panel go to `Plugins > Installed Plugins` and
 This field will be used to set the `author` field on the Po.et work. Set it to your name, pen name, blog's name, etc.
 
 ### API URL
-The URL of the Frost API. Use the default value.
+The URL of the Frost API. It'll default to Frost's URL once it's released.
 
 ### Token
 The API token provided to you by Frost upon registry. This is what ties the published works to your Frost account.
