@@ -101,7 +101,7 @@ class PoetArticlePoster {
 	 */
 	public function set_default_values() {
 		$default = array(
-			'api_url'   => '',
+			'api_url'   => 'https://api.frost.po.et/works',
 			'token'     => '',
 			'active'    => 1
 		);
