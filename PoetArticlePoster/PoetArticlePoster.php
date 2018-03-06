@@ -1,10 +1,11 @@
 <?php
 /*
-Plugin Name: Po.et Article Poster
-Description: Post articles automatically on insertion and modification to po.et API
+Plugin Name: Po.et
+Plugin URI:  https://github.com/poetapp/wordpress-plugin
+Description: Automatically post to Po.et from WordPress using Frost
 Version:     1.0.0
-Author:      Mostafa Khater
-Author URI:  mailto:mostafa@mostafakhater.com
+Author:      Po.et
+Author URI:  https://po.et
 License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: poet_article_poster
