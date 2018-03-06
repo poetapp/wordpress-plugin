@@ -1,2 +1,2 @@
 default:
-	zip po.et.zip PoetArticlePoster
+	zip -r po.et.zip PoetArticlePoster
