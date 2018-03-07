@@ -12,7 +12,7 @@ Then, from your WordPress administration panel, go to `Plugins > Add New` and cl
 The plugin has been submitted to the Plugin Directory and WordPress is currently reviewing the plugin's functionality. Once this process is ready, the plugin will be available from the Plugin Directory. 
 
 ## How to Use
-From your WordPress administration panel go to `Plugins > Installed Plugins` and scroll down until you find `Po.et Article Poster`. You'll need to activate it first. Then click con `Settings` to configure it.
+From your WordPress administration panel go to `Plugins > Installed Plugins` and scroll down until you find `Po.et`. You'll need to activate it first. Then click con `Settings` to configure it.
 
 ## Badge
 Place the shortcode `[poet-badge]` anywhere in your article to display the Po.et Badge as proof that the article was timestamped.
