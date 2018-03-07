@@ -129,8 +129,8 @@ class PoetArticlePoster {
 	 * Registration of settings page in WordPress options menu
 	 */
 	public function add_options_page() {
-		add_options_page( __( 'Po.et Article Poster Settings' ),
-			__( 'Po.et Article Poster Settings' ),
+		add_options_page( __( 'Po.et' ),
+			__( 'Po.et' ),
 			'manage_options',
 			$this->plugin,
 			array( $this, 'create_options_page' ) );
@@ -163,7 +163,7 @@ class PoetArticlePoster {
 
 		add_settings_section(
 			'poet_article_poster_setting_section_id', // ID
-			__( 'Po.et Article Poster Settings' ), // Title
+			__( 'Po.et Settings' ), // Title
 			array( $this, 'print_section_info' ), // Callback
 			$this->plugin // Page
 		);
@@ -186,7 +186,7 @@ class PoetArticlePoster {
 
 		add_settings_field(
 			'token', // ID
-			__( 'Token' ), // Title
+			__( 'API Token' ), // Title
 			array( $this, 'token_callback' ), // Callback
 			$this->plugin, // Page
 			'poet_article_poster_setting_section_id' // Section
@@ -194,7 +194,7 @@ class PoetArticlePoster {
 
 		add_settings_field(
 			'active', // ID
-			__( 'Post articles to API automatically on insert or update?' ), // Title
+			__( 'Post articles automatically on insert or update?' ), // Title
 			array( $this, 'active_callback' ), // Callback
 			$this->plugin, // Page
 			'poet_article_poster_setting_section_id' // Section
