@@ -51,8 +51,8 @@ See https://frost.po.et for more info.
 
 == Screenshots ==
 
-1.
-2.
+1. Po.et plugin settings.
+2. Verified on Po.et.
 
 == Changelog ==
 
