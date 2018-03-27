@@ -2,7 +2,7 @@
 Contributors: mostafa, lautarodragan
 Donate link:
 Tags: po.et, frost, decentralized, intellectual property, bitcoin
-Requires at least: 3.3
+Requires at least: 4.1
 Requires PHP: 5.2.4
 Tested up to: 4.9.4
 Stable tag: trunk
