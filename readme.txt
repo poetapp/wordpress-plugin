@@ -1,5 +1,5 @@
 === Po.et ===
-Contributors: mostafa, lautarodragan
+Contributors: lautarodragan, knowledgearc
 Donate link:
 Tags: po.et, frost, decentralized, intellectual property, bitcoin
 Requires at least: 4.1
