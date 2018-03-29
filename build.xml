@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Po.et Wordpress Plugin" default="help" basedir=".">
+    <property name="src" value="./"/>
+    <property name="package.dest" value="${src}/build"/>
+    <property name="filename" value="poet-1.0"/>
+
+    <target name="package" description="Packages the Wordpress plugin for easy installation.">
+        <delete dir="${package.dest}"/>
+        <mkdir dir="${package.dest}"/>
+
+        <zip
+            destfile="${package.dest}/${filename}.zip"
+            basedir="${src}">
+            <fileset dir=".">
+                <include name="assets/**"/>
+                <include name="includes/**"/>
+                <include name="LICENSE"/>
+                <include name="poet.php"/>
+                <include name="README.md"/>
+                <include name="readme.txt"/>
+            </fileset>
+        </zip>
+    </target>
+</project>
