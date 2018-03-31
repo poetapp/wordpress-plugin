@@ -2,7 +2,7 @@
 <project name="Po.et Wordpress Plugin" default="help" basedir=".">
     <property name="src" value="./"/>
     <property name="package.dest" value="${src}/build"/>
-    <property name="filename" value="poet-1.0"/>
+    <property name="filename" value="poet-1.0.1"/>
 
     <target name="package" description="Packages the Wordpress plugin for easy installation.">
         <delete dir="${package.dest}"/>

@@ -3,7 +3,7 @@
 Plugin Name: Po.et
 Plugin URI:  https://github.com/poetapp/wordpress-plugin
 Description: Automatically post to Po.et from WordPress using Frost
-Version:     1.0.0
+Version:     1.0.1
 Author:      Po.et
 Author URI:  https://po.et
 License:     GPL2

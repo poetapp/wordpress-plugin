@@ -5,7 +5,7 @@ Tags: po.et, frost, decentralized, intellectual property, bitcoin
 Requires at least: 4.1
 Requires PHP: 5.2.4
 Tested up to: 4.9.4
-Stable tag: trunk
+Stable tag: 1.0.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
