@@ -25,7 +25,7 @@ Go to the [releases](https://github.com/poetapp/wordpress-plugin/releases) secti
 Then, from your WordPress administration panel, go to `Plugins > Add New` and click the `Upload Plugin` button on the top of the page.
 
 ### From the WordPress Plugin Directory
-The plugin has been submitted to the Plugin Directory and WordPress is currently reviewing the plugin's functionality. Once this process is ready, the plugin will be available from the Plugin Directory.
+The Official Po.et WordPress Plugin can be found at https://wordpress.org/plugins/po-et/.
 
 ## How to Use
 From your WordPress administration panel go to `Plugins > Installed Plugins` and scroll down until you find `Po.et`. You'll need to activate it first. Then click con `Settings` to configure it.
