@@ -47,7 +47,22 @@ The API token provided to you by Frost upon registry. This is what ties the publ
 ### Post articles to API automatically on insert or update?	
 Use this checkbox to enable or disable automatic posting.
 
+## Developers
+
+The Po.et WordPress plugin welcomes additions from developers. To ensure code is consistent and that all developers can focus on building great features rather than deciphering various coding styles, the Po.et WordPress plugin adheres to the WordPress coding standards.
+
+To ensure your code is formatted the WordPress way, you can run the PHP code sniffer, using the WordPress coding ruleset.
+
+There are various ways to install both PHPCS and the WordPress coding ruleset but the easiest method is to install it globally using Composer. Assuming you have Composer and PHPCS installed and available from the command line, run the following from a terminal (assuming you are on Linux or a *nix derivative):
+
+```
+composer global require wp-coding-standards/wpcs
+phpcs --config-set installed_paths ~/.composer/vendor/wp-coding-standards/wpc
+```
+
+It is also assumed you have composer installed to your home directory, so you may need to adjust the installed_paths directive to match your composer installation directory.
+
 ## License
 
-The Po.et Wordpress plugin is licensed under the terms of the MIT License and is available for free. See [LICENSE](LICENSE).
+The Po.et WordPress plugin is licensed under the terms of the MIT License and is available for free. See [LICENSE](LICENSE).
 
