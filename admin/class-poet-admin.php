@@ -34,17 +34,23 @@ class Poet_Admin {
 	private $version;
 
 	/**
+	 * Plugin Base Name
+	 *
+	 * @access   private
+	 * @var      string    $version    The current version of this plugin.
+	 */
+	private $plugin;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @param string $plugin_name       The name of this plugin.
 	 * @param string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-		$dir = dirname( __FILE__ );
-		require_once $dir . '/class-poet-consumer.php';
 		$this->poet    = $plugin_name;
 		$this->version = $version;
-
+		$this->plugin  = plugin_basename( __FILE__ );
 	}
 
 	/**
@@ -81,50 +87,6 @@ class Poet_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-	}
-	/**
-	 * Called on WordPress post saving (insertion/modifications)
-	 *
-	 * @param string $post_id ID post from WP.
-	 */
-	public function post_article( $post_id ) {
-		$active  = isset( get_option( 'poet_option' )['active'] ) ? 1 : 0;
-		$api_url = ! empty( get_option( 'poet_option' )['api_url'] ) ? 1 : 0;
-		$token   = ! empty( get_option( 'poet_option' )['token'] ) ? 1 : 0;
-		$post    = get_post( $post_id );
-		// Checking if plugin is activated in its settings page and the post status is publish to make sure it is not just a draft.
-		if ( 'publish' !== ! $active || ! $api_url || ! $token || $post->post_status ) {
-			return;
-		}
-		// Getting API credentials and author name set in plugin settings page.
-		$author = isset( get_option( 'poet_option' )['author'] ) ? get_option( 'poet_option' )['author'] : '';
-		$url    = isset( get_option( 'poet_option' )['api_url'] ) ? get_option( 'poet_option' )['api_url'] : '';
-		$token  = isset( get_option( 'poet_option' )['token'] ) ? get_option( 'poet_option' )['token'] : '';
-
-		// Generating Consumer object with credentials sent to its constructor.
-		$consumer = new Poet_Consumer( $author, $url, $token, $post );
-
-		// Posting the article to the API.
-		try {
-			$response              = $consumer->consume();
-			$decoded_response_body = json_decode( $response['body'] );
-
-			// Adding initial empty meta key for the poet work id.
-			update_post_meta( $post_id, 'poet_work_id', '' );
-
-			// Checking if the returned response body is a valid JSON string.
-			if ( json_last_error() !== JSON_ERROR_SYNTAX
-				&& is_object( $decoded_response_body )
-				&& property_exists( $decoded_response_body, 'work_id' ) ) {
-
-				// Creating or updating poet work id meta to the returned work id.
-				update_post_meta( $post_id, 'poet_work_id', $decoded_response_body->work_id );
-
-			}
-		} catch ( Exception $e ) {
-			echo esc_html( $e );
-		}
-
 	}
 
 	/**
