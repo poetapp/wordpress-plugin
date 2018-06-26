@@ -5,7 +5,7 @@ Tags: po.et, frost, decentralized, intellectual property, bitcoin
 Requires at least: 4.1
 Requires PHP: 5.2.4
 Tested up to: 4.9.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,12 @@ See https://frost.po.et for more info.
 2. Verified on Po.et.
 
 == Changelog ==
+
+= 1.0.2 =
+Add link to explorer.po.et on badge.
+
+= 1.0.1 =
+Code style and structure fixes.
 
 = 1.0.0 =
 Initial release.
