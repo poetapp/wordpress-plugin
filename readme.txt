@@ -1,6 +1,6 @@
 === Po.et ===
 Contributors: lautarodragan, knowledgearc
-Donate link:
+Donate link: https://www.po.et
 Tags: po.et, frost, decentralized, intellectual property, bitcoin
 Requires at least: 4.1
 Requires PHP: 5.2.4
@@ -64,3 +64,8 @@ Code style and structure fixes.
 
 = 1.0.0 =
 Initial release.
+
+== Upgrade Notice ==
+
+= 1.0.2 =
+Upgrade to have the Po.et badge displayed in your posts link to your work in Po.et Explorer: https://explorer.po.et
