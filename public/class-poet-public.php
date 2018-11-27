@@ -95,13 +95,14 @@ class Poet_Public {
 		$post                  = get_post();
 		$quill_image_url       = plugin_dir_url( __FILE__ ) . '/images/quill.svg';
 		$post_publication_date = get_the_modified_time( 'F jS Y, H:i', $post );
+		$frost_last_updated    = date( 'F jS Y, H:i', (int) get_post_meta( $post->ID, 'poet_last_updated', true ) );
 		$work_id               = get_post_meta( $post->ID, 'poet_work_id', true );
 		$poet_badge            = '';
 
 		// are we working with a 64 char string.
 		if ( strlen( $work_id ) === 64 ) {
 			include_once dirname( __FILE__ ) . '/partials/poet-badge-template.php';
-			$poet_badge = print_poet_template( $quill_image_url, $work_id, $post_publication_date );
+			$poet_badge = print_poet_template( $quill_image_url, $work_id, $frost_last_updated );
 		}
 
 		return $content . $poet_badge;
@@ -145,6 +146,7 @@ class Poet_Public {
 
 				// Creating or updating poet work id meta to the returned work id.
 				update_post_meta( $post_id, 'poet_work_id', $decoded_response_body->{'workId'} );
+				update_post_meta( $post_id, 'poet_last_updated', time() );
 
 			}
 		} catch ( Exception $e ) {

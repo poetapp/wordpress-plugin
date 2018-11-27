@@ -14,7 +14,7 @@
  * @param string $post_publication_date date of the post publication.
  * @return string html code plus Po.et badge
  */
-function print_poet_template( $quill_image_url, $work_id, $post_publication_date ) {
+function print_poet_template( $quill_image_url, $work_id, $display_date ) {
 	ob_start()
 	?>
 	<div class = "poet-container">
@@ -26,7 +26,7 @@ function print_poet_template( $quill_image_url, $work_id, $post_publication_date
 						Verified on Po.et</p>
 					<p class = "poet-date">
 						<?php
-						echo esc_html( $post_publication_date );
+						echo esc_html( $display_date );
 						?>
 					</p>
 				</div>
