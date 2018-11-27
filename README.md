@@ -62,9 +62,4 @@ The Po.et WordPress plugin welcomes additions from developers. To ensure code is
 
 To ensure your code is formatted the WordPress way, you can run the PHP code sniffer using the WordPress coding ruleset. There are various ways to install both PHPCS and the WordPress coding ruleset, but the easiest method is to install it globally using Composer. Assuming you have Composer and PHPCS installed and available from the command line, run the following from a terminal (assuming you are on Linux or a *nix derivative):
 
-```
-composer global require wp-coding-standards/wpcs
-phpcs --config-set installed_paths ~/.composer/vendor/wp-coding-standards/wpc
-```
-
-It is also assumed you have Composer installed in your home directory, so you may need to adjust the `installed_paths` directive to match your Composer installation directory.
+You can run PHP CodeSniffer with `composer run-script lint` and `composer run-script clean` to automatically fix the style errors if possible.

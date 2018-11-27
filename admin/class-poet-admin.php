@@ -218,7 +218,8 @@ class Poet_Admin {
 	 * Registration of settings page in WordPress options menu
 	 */
 	public function add_options_page() {
-		add_options_page( __( 'Po.et' ),
+		add_options_page(
+			__( 'Po.et' ),
 			__( 'Po.et' ),
 			'manage_options',
 			$this->plugin,

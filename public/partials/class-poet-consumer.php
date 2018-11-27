@@ -101,7 +101,8 @@ class Poet_Consumer {
 		);
 
 		$body_json = wp_json_encode( $body_array );
-		$response  = wp_remote_post( $this->url,
+		$response  = wp_remote_post(
+			$this->url,
 			array(
 				'method'  => 'POST',
 				'timeout' => 30,

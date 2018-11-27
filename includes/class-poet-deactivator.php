@@ -24,9 +24,11 @@ class Poet_Deactivator {
 			return;
 		}
 		// Unregister plugin settings on deactivation.
-		unregister_setting( 'poet',
+		unregister_setting(
+			'poet',
 			'poet_option',
-		array( self, 'sanitize' ) );
+			array( self, 'sanitize' )
+		);
 	}
 
 }

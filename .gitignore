@@ -19,3 +19,6 @@ rules
 screenshots
 temp.text
 vault.json
+vendor/
+*.zip
+build
