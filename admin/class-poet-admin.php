@@ -138,6 +138,13 @@ class Poet_Admin {
 			$this->plugin, // Page.
 			'poet_setting_section_id' // Section.
 		);
+		add_settings_field(
+			'backfill', // ID.
+			__( 'Backfill all posts' ), // Title.
+			array( $this, 'backfill_callback' ), // Callback.
+			$this->plugin, // Page.
+			'poet_setting_section_id' // Section.
+		);
 	}
 
 	/**
@@ -169,6 +176,9 @@ class Poet_Admin {
 		}
 		if ( isset( $input['active'] ) ) {
 			$new_input['active'] = (int) $input['active'];
+		}
+		if ( isset( $input['backfill'] ) ) {
+			$new_input['backfill'] = (int) $input['backfill'];
 		}
 
 		return $new_input;
@@ -212,6 +222,13 @@ class Poet_Admin {
 		echo '<input type="checkbox" id="active" name="poet_option[active]" ' . checked( 1, $checked, false ) . ' />';
 	}
 
+	/**
+	 * Returns backfill checkbox input
+	 */
+	public function backfill_callback() {
+		$checked = isset( get_option( 'poet_option' )['backfill'] ) ? 1 : 0;
+		echo '<input type="checkbox" id="backfill" name="poet_option[backfill]" ' . checked( 1, $checked, false ) . ' />';
+	}
 
 
 	/**

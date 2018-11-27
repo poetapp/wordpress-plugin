@@ -100,6 +100,11 @@ class Poet {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-poet-i18n.php';
 
 		/**
+		 * The class responsible for defining handling the post backfill feature
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-poet-backfill.php';
+		
+		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-poet-admin.php';
@@ -144,6 +149,7 @@ class Poet {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_options_page' );
 		$this->loader->add_filter( 'plugin_action_links_' . $this->poet, $plugin_admin, 'add_settings_link' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_setting' );
+		$this->loader->add_action( 'admin_init', 'Poet_Backfill', 'init' );
 	}
 
 	/**
@@ -156,7 +162,7 @@ class Poet {
 		$plugin_public = new Poet_Public( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'save_post', $plugin_public, 'post_article' );
+		$this->loader->add_action( 'save_post', 'Poet_Public', 'post_article' );
 		$this->loader->add_filter( 'the_content', $plugin_public, 'poet_badge_handler' );
 	}
 

@@ -113,7 +113,7 @@ class Poet_Public {
 	 *
 	 * @param string $post_id ID post from WP.
 	 */
-	public function post_article( $post_id ) {
+	public static function post_article( $post_id ) {
 
 		$active  = isset( get_option( 'poet_option' )['active'] ) ? 1 : 0;
 		$api_url = ! empty( get_option( 'poet_option' )['api_url'] ) ? 1 : 0;
