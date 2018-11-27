@@ -25,8 +25,11 @@ class Poet_Activator {
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
 		}
+
+		$api_url = apply_filters( 'poet_api_url', 'https://api.poetnetwork.net/works' );
+
 		$default = array(
-			'api_url' => 'https://api.poetnetwork.net/works',
+			'api_url' => $api_url,
 			'token'   => '',
 			'active'  => 1,
 		);
