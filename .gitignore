@@ -19,6 +19,8 @@ rules
 screenshots
 temp.text
 vault.json
+vendor
 vendor/
 *.zip
 build
+

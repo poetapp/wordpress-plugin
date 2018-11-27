@@ -58,6 +58,7 @@ class Poet_Consumer {
 	 * Get Author Name method
 	 *
 	 * Returns author name set in settings page or the name of the user who published the post
+	 * @TODO support things like Co-Authors and/or other filters
 	 *
 	 * @return string
 	 */
@@ -92,11 +93,13 @@ class Poet_Consumer {
 		$tags       = implode( ',', $tags_array );
 
 		$body_array = array(
-			'name'          => $this->post->post_title,
+			'canonicalUrl'  => get_permalink( $this->post->ID ),
+			'name'          => get_the_title( $this->post->ID ),
 			'datePublished' => get_the_modified_time( 'c', $this->post ),
 			'dateCreated'   => get_the_time( 'c', $this->post ),
 			'author'        => $this->get_author_name(),
 			'tags'          => $tags,
+			// @TODO maybe parse the shortcodes and other filters instead of sending the raw text
 			'content'       => $this->post->post_content,
 		);
 
