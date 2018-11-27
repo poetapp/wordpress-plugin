@@ -26,7 +26,7 @@ class Poet_Activator {
 			return;
 		}
 		$default = array(
-			'api_url' => 'https://api.frost.po.et/works',
+			'api_url' => 'https://api.poetnetwork.net/works',
 			'token'   => '',
 			'active'  => 1,
 		);
