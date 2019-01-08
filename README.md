@@ -42,11 +42,11 @@ This field will be used to set the `author` field on the Po.et Claim that is wri
 
 #### API URL
 
-The URL of the Frost API, which is: https://api.frost.po.et/works
+The URL of the Frost API, which is: https://api.poetnetwork.net/works
 
 #### Token
 
-You will need an API token, which you can obtain here: https://frost.po.et
+You will need an API token, which you can obtain here: https://explorer.poetnetwork.net
 
 #### Post articles to API automatically on insert or update?	
 
