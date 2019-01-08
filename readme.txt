@@ -1,7 +1,7 @@
 === Po.et ===
 Contributors: lautarodragan, knowledgearc
 Donate link: https://www.po.et
-Tags: po.et, frost, decentralized, intellectual property, bitcoin
+Tags: po.et, decentralized, intellectual property, bitcoin
 Requires at least: 4.1
 Requires PHP: 5.2.4
 Tested up to: 4.9.4
@@ -17,27 +17,27 @@ All you need to do is install and configure it,
 then every time you post a new blog entry it'll automatically be posted to the Po.et network,
 and thus will be permanently timestamped on the Bitcoin blockchain.
 
-This plugin makes use of the Frost API to interact with Po.et.
+This plugin makes use of the Po.et API to interact with Po.et.
 
 
 == Installation ==
 1. You can either install this plugin from the WordPress Plugin Directory,
   or manually  [download the plugin](https://github.com/poetapp/wordpress-plugin/releases) and upload it through the 'Plugins > Add New' menu in WordPress
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Register at frost.po.et to get an API key
+1. Register at https://explorer.poetnetwork.net to get an API key
 1. Copy your API Key into the "Token" input in the plugin's settings
 
 == How to Use ==
 
-Once the plugin is properly configured it functions automatically. Every time you create or edit a post, it'll be saved to Po.et through Frost.
+Once the plugin is properly configured it functions automatically. Every time you create or edit a post, it'll be saved to Po.et.
 
-You can optionally place the shortcode `[poet-badge]` in your posts to automatically display a "Timestamped with Po.et" badge.
+A "Timestamped with Po.et" badge is also automatically added to posts.
 
 == Frequently asked questions ==
 
 = How much does this cost?
 
-Nothing. Po.et, Frost and this plugin are completely free.
+Nothing. Po.et and this plugin are completely free.
 Furthermore, the Po.et Node and this plugin are open source (free as in "freedom").
 
 = What is Po.et? =
@@ -45,9 +45,9 @@ Furthermore, the Po.et Node and this plugin are open source (free as in "freedom
 Po.et is a decentralized platform for managing creative assets.
 See https://po.et for more info.
 
-= What is Frost? =
-Frost is an API layer that greatly simplifies interaction with the Po.et network
-See https://frost.po.et for more info.
+= What is the Po.et API? =
+Po.et API is an API layer that greatly simplifies interaction with the Po.et network
+See https://explorer.poetnetwork.net for more info.
 
 == Screenshots ==
 

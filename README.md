@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/poetapp/Lobby](https://badges.gitter.im/poetapp/Lobby.svg)](https://gitter.im/poetapp/Lobby)
 
-The Po.et WordPress Plugin allows you to automatically submit your blog posts to Po.et. Once you install and configure it, every time you post a new blog entry it will automatically be posted through Po.et's Frost API to the Po.et Network.
+The Po.et WordPress Plugin allows you to automatically submit your blog posts to Po.et. Once you install and configure it, every time you post a new blog entry it will automatically be posted through Po.et's API to the Po.et Network.
 
 ## How to Install
 
@@ -42,11 +42,11 @@ This field will be used to set the `author` field on the Po.et Claim that is wri
 
 #### API URL
 
-The URL of the Frost API, which is: https://api.frost.po.et/works
+The URL of the Po.et API, which is: https://api.poetnetwork.net/works
 
 #### Token
 
-You will need an API token, which you can obtain here: https://frost.po.et
+You will need an API token, which you can obtain here: https://explorer.poetnetwork.net
 
 #### Post articles to API automatically on insert or update?	
 
