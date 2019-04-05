@@ -3,23 +3,17 @@ executors:
   base-php:
     environment:
       - WP_TEST_URL: "http://localhost:12000"
-      - WP_TEST_USER: "test"
-      - WP_TEST_USER_PASS: "test"
-      - WP_ENV: "ci"
-      - DB_HOST: "db"
-      - DB_USER: "root"
-      - DB_PASSWORD: ""
-      - DB_NAME: "circle_test"
+      - DB_USER: "user"
+      - DB_PASSWORD: "passw0rd"
+      - DB_NAME: "test_db"
     docker:
-      - image: circleci/php:7.1-node-browsers
-      - image: circleci/mysql:5.7.22-ram
-        name: db
+      - image: circleci/php:7.1-apache-node-browsers
+      - image: circleci/mysql:5.7
         environment:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_ROOT_PASSWORD: ''
-          MYSQL_DATABASE: circle_test
-          MYSQL_ROOT_HOST: 127.0.0.1
-          MYSQL_USER: root
+          MYSQL_ROOT_PASSWORD: rootpw
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: user
+          MYSQL_PASSWORD: passw0rd
 
 
 jobs:
@@ -55,15 +49,26 @@ jobs:
           keys:
             - composer-v1-{{ checksum "composer.lock" }}
             - composer-v1-
-      # - run: composer run-script test
+      - run:
+          name: Waiting for MySQL to be ready
+          command: |
+            for i in `seq 1 30`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
 
+      - run: sudo apt-get install mysql-client
+       
       - run: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
             
       - run: chmod +x wp-cli.phar
             
       - run: ./wp-cli.phar core download --allow-root --path=wordpress
             
-      - run: ./wp-cli.phar core config --allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=$DB_HOST --path=wordpress
+      - run: ./wp-cli.phar core config --allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=127.0.0.1 --path=wordpress
             
       - run: ./wp-cli.phar core install --allow-root --admin_name=$WP_TEST_USER --admin_password=WP_TEST_USER_PASS --admin_email=admin@example.com --url=$WP_TEST_URL --title=WordPress --path=wordpress
             
