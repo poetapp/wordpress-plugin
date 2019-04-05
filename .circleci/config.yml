@@ -78,7 +78,7 @@ jobs:
             composer run-script wp-package
             
             # And use WP-CLI to activate it
-            ./wp-cli.phar plugin activate poet.zip --path=wordpress
+            ./wp-cli.phar plugin install poet.zip --path=wordpress --activate
 
   bundle:
     executor: base-php
@@ -104,9 +104,9 @@ workflows:
       - lint:
           requires:
             - build
-      #- test:
-      #    requires:
-      #      - build
+      - test:
+          requires:
+            - build
       - bundle:
           requires:
             - build
