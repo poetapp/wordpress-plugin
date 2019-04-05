@@ -1,14 +1,26 @@
 version: 2.1
 executors:
-  base-node:
+  base-php:
     environment:
-      FOO: bar
+      - WP_TEST_URL: "http://localhost:12000"
+      - WP_TEST_USER: "test"
+      - WP_TEST_USER_PASS: "test"
+      - WP_ENV: "ci"
+      - MYSQL_ALLOW_EMPTY_PASSWORD: true,
+      - MYSQL_DATABASE: "circle_test"
+      - MYSQL_HOST: "127.0.0.1"
+      - DB_HOST: "127.0.0.1"
+      - DB_USER: "root"
+      - DB_PASSWORD: "rootPass"
+      - DB_NAME: "circle_test"
     docker:
       - image: circleci/php:7.1-node-browsers
+      - image: circleci/mysql:5.7.22-ram
+
 
 jobs:
   build:
-    executor: base-node
+    executor: base-php
     steps:
       - checkout
       - restore_cache: 
@@ -22,7 +34,7 @@ jobs:
             - vendor
 
   lint:
-    executor: base-node
+    executor: base-php
     steps:
       - checkout
       - restore_cache: 
@@ -32,17 +44,44 @@ jobs:
       - run: composer run-script lint
 
   test:
-    executor: base-node
+    executor: base-php
     steps:
       - checkout
       - restore_cache: 
           keys:
             - composer-v1-{{ checksum "composer.lock" }}
             - composer-v1-
-      - run: composer run-script test
+      # - run: composer run-script test
+
+      - run:
+          name: Install WordPress
+          command: |
+            # No password is required for the MySQL user `ubuntu`
+            mysql -u ubuntu -e "create database wordpress"
+            
+            # Use cURL to fetch WP-CLI
+            curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+            
+            # Make sure WP-CLI is executable
+            chmod +x wp-cli.phar
+            
+            # Download WordPress into `wordpress` directory
+            ./wp-cli.phar core download --allow-root --path=wordpress
+            
+            # Generate `wp-config.php` file
+            ./wp-cli.phar core config --allow-root --dbname=wordpress --dbuser=ubuntu --dbhost=localhost --path=wordpress
+            
+            # Install WordPress
+            ./wp-cli.phar core install --allow-root --admin_name=admin --admin_password=admin --admin_email=admin@example.com --url=http://wppusher-plugin.dev:8080 --title=WordPress --path=wordpress
+            
+            # Clonse WP Pusher plugin from GitHub
+            composer run-script wp-package
+            
+            # And use WP-CLI to activate it
+            ./wp-cli.phar plugin activate poet.zip --path=wordpress
 
   bundle:
-    executor: base-node
+    executor: base-php
     steps:
       - checkout
       - restore_cache: 
@@ -50,9 +89,11 @@ jobs:
             - composer-v1-{{ checksum "composer.lock" }}
             - composer-v1-
       - run: composer run-script wp-package
-      - run: ls -al
       - store_artifacts:
           path: poet.zip
+
+dependencies:
+  pre:
 
 
 workflows:

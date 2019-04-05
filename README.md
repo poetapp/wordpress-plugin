@@ -1,5 +1,6 @@
 # Po.et WordPress Plugin
 
+[![CircleCI](https://circleci.com/gh/poetapp/wordpress-plugin.svg?style=svg)](https://circleci.com/gh/poetapp/wordpress-plugin)
 [![Join the chat at https://gitter.im/poetapp/Lobby](https://badges.gitter.im/poetapp/Lobby.svg)](https://gitter.im/poetapp/Lobby)
 
 The Po.et WordPress Plugin allows you to automatically submit your blog posts to Po.et. Once you install and configure it, every time you post a new blog entry it will automatically be posted through Po.et's Frost API to the Po.et Network.
