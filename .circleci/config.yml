@@ -68,7 +68,7 @@ jobs:
             
       - run: ./wp-cli.phar core download --allow-root --path=wordpress
             
-      - run: ./wp-cli.phar core config --allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=127.0.0.1 --path=wordpress
+      - run: ./wp-cli.phar core config --allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=127.0.0.1 --path=wordpress
             
       - run: ./wp-cli.phar core install --allow-root --admin_name=$WP_TEST_USER --admin_password=WP_TEST_USER_PASS --admin_email=admin@example.com --url=$WP_TEST_URL --title=WordPress --path=wordpress
             
