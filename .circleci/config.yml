@@ -56,29 +56,19 @@ jobs:
             - composer-v1-
       # - run: composer run-script test
 
-      - run:
-          name: Install WordPress
-          command: |
-            # Use cURL to fetch WP-CLI
-            curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+      - run: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
             
-            # Make sure WP-CLI is executable
-            chmod +x wp-cli.phar
+      - run: chmod +x wp-cli.phar
             
-            # Download WordPress into `wordpress` directory
-            ./wp-cli.phar core download --allow-root --path=wordpress
+      - run: ./wp-cli.phar core download --allow-root --path=wordpress
             
-            # Generate `wp-config.php` file
-            ./wp-cli.phar core config --allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=$DB_HOST --path=wordpress
+      - run: ./wp-cli.phar core config --allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbhost=$DB_HOST --path=wordpress
             
-            # Install WordPress
-            ./wp-cli.phar core install --allow-root --admin_name=$WP_TEST_USER --admin_password=WP_TEST_USER_PASS --admin_email=admin@example.com --url=$WP_TEST_URL --title=WordPress --path=wordpress
+      - run: ./wp-cli.phar core install --allow-root --admin_name=$WP_TEST_USER --admin_password=WP_TEST_USER_PASS --admin_email=admin@example.com --url=$WP_TEST_URL --title=WordPress --path=wordpress
             
-            # Clonse WP Pusher plugin from GitHub
-            composer run-script wp-package
+      - run: composer run-script wp-package
             
-            # And use WP-CLI to activate itc
-            ./wp-cli.phar plugin install poet.zip --path=wordpress --activate
+      - run: ./wp-cli.phar plugin install poet.zip --path=wordpress --activate
 
       - store_artifacts:
           path: poet.zip
