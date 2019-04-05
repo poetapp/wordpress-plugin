@@ -6,13 +6,14 @@ executors:
       - WP_TEST_USER: "test"
       - WP_TEST_USER_PASS: "test"
       - WP_ENV: "ci"
-      - DB_HOST: "localhost"
+      - DB_HOST: "db"
       - DB_USER: "root"
       - DB_PASSWORD: ""
       - DB_NAME: "circle_test"
     docker:
       - image: circleci/php:7.1-node-browsers
       - image: circleci/mysql:5.7.22-ram
+        name: db
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_ROOT_PASSWORD: ''
