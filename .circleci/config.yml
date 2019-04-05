@@ -1,15 +1,71 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+executors:
+  base-node:
+    environment:
+      FOO: bar
     docker:
       - image: circleci/php:7.1-node-browsers
+
+jobs:
+  build:
+    executor: base-node
     steps:
       - checkout
+      - restore_cache: 
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
       - run: composer install -n --prefer-dist
+      - save_cache: 
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+
+  lint:
+    executor: base-node
+    steps:
+      - checkout
+      - restore_cache: 
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
       - run: composer run-script lint
+
+  test:
+    executor: base-node
+    steps:
+      - checkout
+      - restore_cache: 
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run: composer run-script test
+
+  bundle:
+    executor: base-node
+    steps:
+      - checkout
+      - restore_cache: 
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run: composer run-script wp-package
+      - run: ls -al
+
 
 workflows:
   version: 2
   build-deploy:
     jobs:
       - build
+      - lint:
+          requires:
+            - build
+      - test:
+          requires:
+            - build
+      - bundle:
+          requires:
+            - lint
+            - test
+
