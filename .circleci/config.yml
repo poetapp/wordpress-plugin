@@ -51,6 +51,8 @@ jobs:
             - composer-v1-
       - run: composer run-script wp-package
       - run: ls -al
+      - store_artifacts:
+          path: poet.zip
 
 
 workflows:
@@ -61,11 +63,12 @@ workflows:
       - lint:
           requires:
             - build
-      - test:
-          requires:
-            - build
+      #- test:
+      #    requires:
+      #      - build
       - bundle:
           requires:
-            - lint
-            - test
+            - build
+            #- lint
+            #- test
 
